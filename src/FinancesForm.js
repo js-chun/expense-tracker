@@ -10,7 +10,8 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 
-export default function FinancesForm() {
+export default function FinancesForm(props) {
+	const { addTransaction } = props
 	const [financeType, setFinanceType] = useState("expenses")
 	const [transaction, setTransaction] = useState({
 		dollars: "",
@@ -23,13 +24,17 @@ export default function FinancesForm() {
 		setFinanceType(newAlignment)
 	}
 
+	//popover component when invalid value
 	const handleDollarChange = (evt) => {
 		if (
 			/^[1-9]\d*$/.test(evt.target.value) ||
 			evt.target.value === "0" ||
 			evt.target.value === ""
-		)
+		) {
 			setTransaction({ ...transaction, dollars: evt.target.value })
+		} else {
+			return
+		}
 	}
 
 	const handleCentChange = (evt) => {
@@ -52,76 +57,91 @@ export default function FinancesForm() {
 		}
 	}
 
+	const handleSubmit = (evt) => {
+		evt.preventDefault()
+		let amount = +transaction.dollars + transaction.cents / 100
+		console.log(amount)
+		props.addTransaction({
+			amount,
+			desc: transaction.desc,
+			date: transaction.date,
+			type: financeType,
+		})
+	}
+
 	return (
 		<Box p={5}>
 			<h2>Add a Transaction</h2>
-			<ToggleButtonGroup
-				color="primary"
-				value={financeType}
-				exclusive
-				onChange={handleTypeChange}>
-				<ToggleButton value="income">Income</ToggleButton>
-				<ToggleButton value="expenses">Expenses</ToggleButton>
-			</ToggleButtonGroup>
+			<form onSubmit={handleSubmit}>
+				<ToggleButtonGroup
+					color="primary"
+					value={financeType}
+					exclusive
+					onChange={handleTypeChange}>
+					<ToggleButton value="income">Income</ToggleButton>
+					<ToggleButton value="expenses">Expenses</ToggleButton>
+				</ToggleButtonGroup>
 
-			<Box my={3} sx={{ display: "flex", alignItems: "flex-end" }}>
-				<MonetizationOnIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-				<TextField
+				<Box my={3} sx={{ display: "flex", alignItems: "flex-end" }}>
+					<MonetizationOnIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+					<TextField
+						fullWidth
+						value={transaction.dollars === 0 ? "" : transaction.dollars}
+						onChange={handleDollarChange}
+						label="Amount"
+						type="number"
+						inputProps={{ step: "1" }}
+						variant="standard"
+						InputLabelProps={{
+							shrink: true,
+						}}
+					/>
+					.
+					<TextField
+						value={transaction.cents}
+						onChange={handleCentChange}
+						type="number"
+						inputProps={{ min: "00", max: "99", step: "1" }}
+						placeholder="00"
+						variant="standard"
+					/>
+				</Box>
+				<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
+					<CreateOutlinedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+					<TextField
+						fullWidth
+						value={transaction.desc}
+						onChange={handleDescChange}
+						label="Description"
+						variant="standard"
+						InputLabelProps={{
+							shrink: true,
+						}}
+					/>
+				</Box>
+				<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
+					<TodayOutlinedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+					<TextField
+						fullWidth
+						value={transaction.date}
+						onChange={handleDateChange}
+						variant="standard"
+						type="date"
+						label="Date"
+						InputLabelProps={{
+							shrink: true,
+						}}
+					/>
+				</Box>
+				<Button
+					size="large"
+					variant="contained"
 					fullWidth
-					value={transaction.dollars === 0 ? "" : transaction.dollars}
-					onChange={handleDollarChange}
-					label="Amount"
-					type="number"
-					inputProps={{ min: 0, step: "1" }}
-					variant="standard"
-					InputLabelProps={{
-						shrink: true,
-					}}
-				/>
-				.
-				<TextField
-					value={transaction.cents}
-					onChange={handleCentChange}
-					type="number"
-					inputProps={{ min: "00", max: "99", step: "1" }}
-					placeholder="00"
-					variant="standard"
-				/>
-			</Box>
-			<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
-				<CreateOutlinedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-				<TextField
-					fullWidth
-					value={transaction.desc}
-					onChange={handleDescChange}
-					label="Description"
-					variant="standard"
-					InputLabelProps={{
-						shrink: true,
-					}}
-				/>
-			</Box>
-			<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
-				<TodayOutlinedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-				<TextField
-					fullWidth
-					value={transaction.date}
-					onChange={handleDateChange}
-					variant="standard"
-					type="date"
-					label="Date"
-					InputLabelProps={{
-						shrink: true,
-					}}
-				/>
-			</Box>
-			<Button
-				size="large"
-				variant="contained"
-				fullWidth
-				endIcon={<AddOutlinedIcon />}>
-				Add Transaction
-			</Button>
+					type="submit"
+					endIcon={<AddOutlinedIcon onSubmit={handleSubmit} />}>
+					Add Transaction
+				</Button>
+			</form>
 		</Box>
 	)
 }

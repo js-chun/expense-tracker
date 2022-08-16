@@ -1,4 +1,4 @@
-import React from "react"
+import { useState } from "react"
 import FinancesForm from "./FinancesForm"
 import FinancesDashboard from "./FinancesDashboard"
 import FinancesHistory from "./FinancesHistory"
@@ -7,8 +7,14 @@ import Box from "@mui/material/Box"
 import Drawer from "@mui/material/Drawer"
 import Button from "@mui/material/Button"
 
+const defaultTransactions = [
+	{ amount: 30.0, desc: "Chicken", date: "2022-08-15", type: "expenses" },
+	{ amount: 1000.32, desc: "Moneys", date: "2022-08-15", type: "income" },
+]
+
 export default function FinancesApp() {
-	const [open, setOpen] = React.useState(false)
+	const [open, setOpen] = useState(false)
+	const [transactions, setTransactions] = useState(defaultTransactions)
 
 	const toggleDrawer = (isOpen) => (event) => {
 		if (
@@ -18,6 +24,12 @@ export default function FinancesApp() {
 			return
 		}
 		setOpen(isOpen)
+	}
+
+	const addTransaction = (transactionData) => {
+		const updatedTransactions = [...transactions]
+		updatedTransactions.push(transactionData)
+		setTransactions(updatedTransactions)
 	}
 
 	return (
@@ -32,10 +44,10 @@ export default function FinancesApp() {
 			</Button>
 			<Drawer open={open} onClose={toggleDrawer(false)}>
 				<Box sx={{ width: 400 }} role="presentation">
-					<FinancesForm />
+					<FinancesForm addTransaction={addTransaction} />
 				</Box>
 			</Drawer>
-			<FinancesHistory />
+			<FinancesHistory transactions={transactions} />
 		</Container>
 	)
 }
