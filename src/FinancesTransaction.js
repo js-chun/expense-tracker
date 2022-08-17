@@ -17,13 +17,14 @@ const Item = styled("div")(({ theme }) => ({
 	height: "100%",
 }))
 
-// expenses #ffadad
-// incomes #caffbf
-
 export default function FinancesTransaction(props) {
-	const { transaction } = props
+	const { transaction, deleteTransaction } = props
 	const backgroundColor =
 		transaction.type === "expenses" ? "#ffadad" : "#caffbf"
+
+	const handleDelete = () => {
+		deleteTransaction(transaction.id)
+	}
 	return (
 		<Paper elevation={2}>
 			<Grid container p={0} spacing={0} sx={{ width: "100%" }}>
@@ -44,15 +45,16 @@ export default function FinancesTransaction(props) {
 					</Item>
 				</Grid>
 				<Grid lg={2}>
-					{/* Need to get .00 cents in */}
-					<Item sx={{ justifyContent: "end" }}>${transaction.amount}</Item>
+					<Item sx={{ justifyContent: "end" }}>
+						${transaction.amount.toFixed(2)}
+					</Item>
 				</Grid>
 				<Grid lg={2}>
-					<Item>
+					<Item sx={{ justifyContent: "end" }}>
 						<IconButton size="small">
 							<EditIcon />
 						</IconButton>
-						<IconButton size="small">
+						<IconButton size="small" onClick={handleDelete}>
 							<DeleteIcon />
 						</IconButton>
 					</Item>

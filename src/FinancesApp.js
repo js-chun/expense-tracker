@@ -7,9 +7,24 @@ import Box from "@mui/material/Box"
 import Drawer from "@mui/material/Drawer"
 import Button from "@mui/material/Button"
 
+//for now with default transactions
+import { v4 as uuidv4 } from "uuid"
+
 const defaultTransactions = [
-	{ amount: 30.0, desc: "Chicken", date: "2022-08-15", type: "expenses" },
-	{ amount: 1000.32, desc: "Moneys", date: "2022-08-15", type: "income" },
+	{
+		amount: 30.0,
+		desc: "Chicken",
+		date: "2022-08-15",
+		type: "expenses",
+		id: uuidv4(),
+	},
+	{
+		amount: 1000.32,
+		desc: "Moneys",
+		date: "2022-08-15",
+		type: "income",
+		id: uuidv4(),
+	},
 ]
 
 export default function FinancesApp() {
@@ -32,6 +47,13 @@ export default function FinancesApp() {
 		setTransactions(updatedTransactions)
 	}
 
+	const deleteTransaction = (transactionId) => {
+		const updatedTransactions = [...transactions].filter(
+			(transaction) => transaction.id !== transactionId
+		)
+		setTransactions(updatedTransactions)
+	}
+
 	return (
 		<Container maxWidth="sm">
 			<h1>Finance Tracker</h1>
@@ -47,7 +69,10 @@ export default function FinancesApp() {
 					<FinancesForm addTransaction={addTransaction} />
 				</Box>
 			</Drawer>
-			<FinancesHistory transactions={transactions} />
+			<FinancesHistory
+				transactions={transactions}
+				deleteTransaction={deleteTransaction}
+			/>
 		</Container>
 	)
 }

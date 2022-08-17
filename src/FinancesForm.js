@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { getDateString, getDateInTimezone } from "./utils/FormHelper"
+import { v4 as uuidv4 } from "uuid"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import ToggleButton from "@mui/material/ToggleButton"
@@ -66,6 +67,7 @@ export default function FinancesForm(props) {
 			desc: transaction.desc,
 			date: transaction.date,
 			type: financeType,
+			id: uuidv4(),
 		})
 	}
 
