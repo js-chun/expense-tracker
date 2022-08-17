@@ -63,14 +63,13 @@ export default function FinancesApp() {
 			}
 			return transaction
 		})
-		console.log(updatedTransactions)
 		setTransactions(updatedTransactions)
 	}
 
 	return (
 		<Container maxWidth="sm">
 			<h1>Finance Tracker</h1>
-			<FinancesDashboard />
+			<FinancesDashboard transactions={transactions} />
 			<Button
 				onClick={toggleDrawer(true)}
 				variant="contained"
