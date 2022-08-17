@@ -83,8 +83,20 @@ export default function FinancesForm(props) {
 					<ToggleButton value="income">Income</ToggleButton>
 					<ToggleButton value="expenses">Expenses</ToggleButton>
 				</ToggleButtonGroup>
-
 				<Box my={3} sx={{ display: "flex", alignItems: "flex-end" }}>
+					<CreateOutlinedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+					<TextField
+						fullWidth
+						value={transaction.desc}
+						onChange={handleDescChange}
+						label="Description"
+						variant="standard"
+						InputLabelProps={{
+							shrink: true,
+						}}
+					/>
+				</Box>
+				<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
 					<MonetizationOnIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
 					<TextField
 						fullWidth
@@ -106,19 +118,6 @@ export default function FinancesForm(props) {
 						inputProps={{ min: "00", max: "99", step: "1" }}
 						placeholder="00"
 						variant="standard"
-					/>
-				</Box>
-				<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
-					<CreateOutlinedIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
-					<TextField
-						fullWidth
-						value={transaction.desc}
-						onChange={handleDescChange}
-						label="Description"
-						variant="standard"
-						InputLabelProps={{
-							shrink: true,
-						}}
 					/>
 				</Box>
 				<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>

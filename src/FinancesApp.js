@@ -7,25 +7,7 @@ import Box from "@mui/material/Box"
 import Drawer from "@mui/material/Drawer"
 import Button from "@mui/material/Button"
 
-//for now with default transactions
-import { v4 as uuidv4 } from "uuid"
-
-const defaultTransactions = [
-	{
-		amount: 30.0,
-		desc: "Chicken",
-		date: "2022-08-15",
-		type: "expenses",
-		id: uuidv4(),
-	},
-	{
-		amount: 1000.32,
-		desc: "Moneys",
-		date: "2022-08-15",
-		type: "income",
-		id: uuidv4(),
-	},
-]
+import { defaultTransactions } from "./utils/defaultTransactions"
 
 export default function FinancesApp() {
 	const [open, setOpen] = useState(false)

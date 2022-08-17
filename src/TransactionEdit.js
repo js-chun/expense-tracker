@@ -6,17 +6,8 @@ import IconButton from "@mui/material/IconButton"
 import ChangeCircleIcon from "@mui/icons-material/ChangeCircle"
 import SaveIcon from "@mui/icons-material/Save"
 import CancelIcon from "@mui/icons-material/Cancel"
-import { styled } from "@mui/material/styles"
 
-const Item = styled("div")(({ theme }) => ({
-	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-	...theme.typography.body2,
-	display: "flex",
-	justifyContent: "start",
-	alignItems: "center",
-	color: theme.palette.text.secondary,
-	height: "100%",
-}))
+import { Item } from "./styles/TransactionItemStyles"
 
 export default function TransactionEdit(props) {
 	const { transaction, handleEditOff, updateTransaction } = props

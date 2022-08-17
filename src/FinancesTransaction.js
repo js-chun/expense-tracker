@@ -6,17 +6,8 @@ import Grid from "@mui/material/Unstable_Grid2"
 import IconButton from "@mui/material/IconButton"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { styled } from "@mui/material/styles"
 
-const Item = styled("div")(({ theme }) => ({
-	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-	...theme.typography.body2,
-	display: "flex",
-	justifyContent: "start",
-	alignItems: "center",
-	color: theme.palette.text.secondary,
-	height: "100%",
-}))
+import { Item } from "./styles/TransactionItemStyles"
 
 export default function FinancesTransaction(props) {
 	const { transaction, deleteTransaction, updateTransaction } = props

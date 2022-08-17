@@ -1,35 +1,9 @@
 import React from "react"
-import Paper from "@mui/material/Paper"
+import { Item } from "./styles/DashboardStyles"
 import Stack from "@mui/material/Stack"
 import Divider from "@mui/material/Divider"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
-import { styled } from "@mui/material/styles"
-
-const Item = styled(Paper)(({ theme, stripecolor }) => ({
-	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-	...theme.typography.body2,
-	padding: theme.spacing(1),
-	position: "relative",
-	textAlign: "center",
-	color: theme.palette.text.secondary,
-	width: "300px",
-	height: "100px",
-	overflow: "hidden",
-	display: "flex",
-	flexDirection: "column",
-	justifyContent: "center",
-	["&::before"]: {
-		content: '""',
-		position: "absolute",
-		width: "30px",
-		height: "100%",
-		left: "0",
-		top: "-50%",
-		backgroundColor: stripecolor,
-		transform: "rotate(45deg)",
-	},
-}))
 
 export default function FinancesDashboard(props) {
 	const { transactions } = props
@@ -66,7 +40,9 @@ export default function FinancesDashboard(props) {
 				</Item>
 				<Item stripecolor="#118ab2">
 					<Typography variant="h6">Total</Typography>
-					<Typography variant="h5">${total.toFixed(2)}</Typography>
+					<Typography variant="h5">
+						{total >= 0 ? `${total.toFixed(2)}` : `-$${(-total).toFixed(2)}`}
+					</Typography>
 				</Item>
 			</Stack>
 		</Box>
