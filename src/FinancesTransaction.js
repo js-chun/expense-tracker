@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState } from "react"
+import TransactionEdit from "./TransactionEdit"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Unstable_Grid2"
@@ -18,48 +19,65 @@ const Item = styled("div")(({ theme }) => ({
 }))
 
 export default function FinancesTransaction(props) {
-	const { transaction, deleteTransaction } = props
+	const { transaction, deleteTransaction, updateTransaction } = props
+	const [edit, setEdit] = useState(false)
 	const backgroundColor =
-		transaction.type === "expenses" ? "#ffadad" : "#caffbf"
+		transaction.type === "expenses" ? "#ef476f" : "#06d6a0"
 
 	const handleDelete = () => {
 		deleteTransaction(transaction.id)
 	}
+
+	const handleEditOn = () => {
+		setEdit(true)
+	}
+
+	const handleEditOff = () => {
+		setEdit(false)
+	}
+
 	return (
 		<Paper elevation={2}>
-			<Grid container p={0} spacing={0} sx={{ width: "100%" }}>
-				<Grid lg={1}>
-					{" "}
-					<Box
-						sx={{
-							height: "100%",
-							width: "30px",
-							backgroundColor: { backgroundColor },
-						}}></Box>
+			{edit ? (
+				<TransactionEdit
+					transaction={transaction}
+					handleEditOff={handleEditOff}
+					updateTransaction={updateTransaction}
+				/>
+			) : (
+				<Grid container p={0} spacing={0} sx={{ width: "100%" }}>
+					<Grid xs={1}>
+						<Box
+							sx={{
+								height: "100%",
+								width: "30px",
+								backgroundColor: { backgroundColor },
+							}}></Box>
+					</Grid>
+					<Grid xs={7}>
+						<Item>
+							{transaction.desc.length <= 35
+								? transaction.desc
+								: `${transaction.desc.substr(0, 35)}...`}
+						</Item>
+					</Grid>
+					<Grid xs={2}>
+						<Item sx={{ justifyContent: "space-between" }}>
+							$<Item>{(+transaction.amount).toFixed(2)}</Item>
+						</Item>
+					</Grid>
+					<Grid xs={2}>
+						<Item sx={{ justifyContent: "end" }}>
+							<IconButton size="small" onClick={handleEditOn}>
+								<EditIcon />
+							</IconButton>
+							<IconButton size="small" onClick={handleDelete}>
+								<DeleteIcon />
+							</IconButton>
+						</Item>
+					</Grid>
 				</Grid>
-				<Grid lg={7}>
-					<Item>
-						{transaction.desc.length <= 35
-							? transaction.desc
-							: `${transaction.desc.substr(0, 35)}...`}
-					</Item>
-				</Grid>
-				<Grid lg={2}>
-					<Item sx={{ justifyContent: "end" }}>
-						${transaction.amount.toFixed(2)}
-					</Item>
-				</Grid>
-				<Grid lg={2}>
-					<Item sx={{ justifyContent: "end" }}>
-						<IconButton size="small">
-							<EditIcon />
-						</IconButton>
-						<IconButton size="small" onClick={handleDelete}>
-							<DeleteIcon />
-						</IconButton>
-					</Item>
-				</Grid>
-			</Grid>
+			)}
 		</Paper>
 	)
 }

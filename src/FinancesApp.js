@@ -54,6 +54,19 @@ export default function FinancesApp() {
 		setTransactions(updatedTransactions)
 	}
 
+	const updateTransaction = (newTransactionData, transactionId) => {
+		const updatedTransactions = [...transactions].map((transaction) => {
+			if (transaction.id === transactionId) {
+				transaction.type = newTransactionData.type
+				transaction.desc = newTransactionData.desc
+				transaction.amount = newTransactionData.amount
+			}
+			return transaction
+		})
+		console.log(updatedTransactions)
+		setTransactions(updatedTransactions)
+	}
+
 	return (
 		<Container maxWidth="sm">
 			<h1>Finance Tracker</h1>
@@ -72,6 +85,7 @@ export default function FinancesApp() {
 			<FinancesHistory
 				transactions={transactions}
 				deleteTransaction={deleteTransaction}
+				updateTransaction={updateTransaction}
 			/>
 		</Container>
 	)

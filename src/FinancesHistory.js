@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack"
 import Box from "@mui/material/Box"
 
 export default function FinancesHistory(props) {
-	const { transactions, deleteTransaction } = props
+	const { transactions, deleteTransaction, updateTransaction } = props
 	return (
 		<Box>
 			<h1>History</h1>
@@ -14,9 +14,9 @@ export default function FinancesHistory(props) {
 				{transactions.map((transaction) => (
 					<FinancesTransaction
 						key={transaction.id}
-						id={transaction.id}
 						transaction={transaction}
 						deleteTransaction={deleteTransaction}
+						updateTransaction={updateTransaction}
 					/>
 				))}
 			</Stack>

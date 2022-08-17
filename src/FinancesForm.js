@@ -21,8 +21,8 @@ export default function FinancesForm(props) {
 		date: getDateString(),
 	})
 
-	const handleTypeChange = (event, newAlignment) => {
-		setFinanceType(newAlignment)
+	const handleTypeChange = (event, newType) => {
+		setFinanceType(newType)
 	}
 
 	//popover component when invalid value
@@ -62,7 +62,7 @@ export default function FinancesForm(props) {
 		evt.preventDefault()
 		let amount = +transaction.dollars + transaction.cents / 100
 		console.log(amount)
-		props.addTransaction({
+		addTransaction({
 			amount,
 			desc: transaction.desc,
 			date: transaction.date,
