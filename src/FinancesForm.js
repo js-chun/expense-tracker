@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { getDateString, getDateInTimezone } from "./utils/FormHelper"
-import { v4 as uuidv4 } from "uuid"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import ToggleButton from "@mui/material/ToggleButton"
@@ -11,8 +10,10 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 
-export default function FinancesForm(props) {
-	const { addTransaction } = props
+import { DispatchContext } from "./contexts/TransactionsContext"
+
+export default function FinancesForm() {
+	const dispatch = useContext(DispatchContext)
 	const [financeType, setFinanceType] = useState("expenses")
 	const [transaction, setTransaction] = useState({
 		dollars: "",
@@ -61,13 +62,14 @@ export default function FinancesForm(props) {
 	const handleSubmit = (evt) => {
 		evt.preventDefault()
 		let amount = +transaction.dollars + transaction.cents / 100
-		console.log(amount)
-		addTransaction({
-			amount,
-			desc: transaction.desc,
-			date: transaction.date,
-			type: financeType,
-			id: uuidv4(),
+		dispatch({
+			type: "ADD",
+			transaction: {
+				amount,
+				desc: transaction.desc,
+				date: transaction.date,
+				type: financeType,
+			},
 		})
 	}
 

@@ -1,12 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Item } from "./styles/DashboardStyles"
 import Stack from "@mui/material/Stack"
 import Divider from "@mui/material/Divider"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-export default function FinancesDashboard(props) {
-	const { transactions } = props
+import { TransactionsContext } from "./contexts/TransactionsContext"
+
+export default function FinancesDashboard() {
+	const transactions = useContext(TransactionsContext)
 
 	const sumIncome = transactions
 		.map((transaction) =>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Unstable_Grid2"
@@ -8,25 +8,31 @@ import SaveIcon from "@mui/icons-material/Save"
 import CancelIcon from "@mui/icons-material/Cancel"
 
 import { Item } from "./styles/TransactionItemStyles"
+import { DispatchContext } from "./contexts/TransactionsContext"
 
 export default function TransactionEdit(props) {
-	const { transaction, handleEditOff, updateTransaction } = props
+	const dispatch = useContext(DispatchContext)
+	const { transaction, handleEditOff } = props
 	const [typeInput, setTypeInput] = useState(transaction.type)
 	const [descInput, setDescInput] = useState(transaction.desc)
 	const [amountInput, setAmountInput] = useState(transaction.amount)
 	const backgroundColor = typeInput === "expenses" ? "#ef476f" : "#06d6a0"
 
 	const handleSubmit = () => {
-		console.log(transaction.id)
 		if (
 			typeInput !== transaction.type ||
 			+amountInput !== +transaction.amount ||
 			descInput !== transaction.desc
 		) {
-			updateTransaction(
-				{ type: typeInput, desc: descInput, amount: amountInput },
-				transaction.id
-			)
+			dispatch({
+				type: "UPD",
+				id: transaction.id,
+				transaction: {
+					type: typeInput,
+					desc: descInput,
+					amount: amountInput,
+				},
+			})
 		} else {
 			console.log("is same")
 		}

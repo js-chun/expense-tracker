@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { DispatchContext } from "./contexts/TransactionsContext"
 import TransactionEdit from "./TransactionEdit"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
@@ -6,17 +7,17 @@ import Grid from "@mui/material/Unstable_Grid2"
 import IconButton from "@mui/material/IconButton"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
-
 import { Item } from "./styles/TransactionItemStyles"
 
 export default function FinancesTransaction(props) {
-	const { transaction, deleteTransaction, updateTransaction } = props
+	const dispatch = useContext(DispatchContext)
+	const { transaction } = props
 	const [edit, setEdit] = useState(false)
 	const backgroundColor =
 		transaction.type === "expenses" ? "#ef476f" : "#06d6a0"
 
 	const handleDelete = () => {
-		deleteTransaction(transaction.id)
+		dispatch({ type: "DEL", id: transaction.id })
 	}
 
 	const handleEditOn = () => {
@@ -33,7 +34,6 @@ export default function FinancesTransaction(props) {
 				<TransactionEdit
 					transaction={transaction}
 					handleEditOff={handleEditOff}
-					updateTransaction={updateTransaction}
 				/>
 			) : (
 				<Grid container p={0} spacing={0} sx={{ width: "100%" }}>
