@@ -1,10 +1,13 @@
 import "./App.css"
 import FinancesApp from "./FinancesApp"
+import { ColorProvider } from "./contexts/ColorContext"
 
 function App() {
 	return (
 		<div className="App">
-			<FinancesApp />
+			<ColorProvider>
+				<FinancesApp />
+			</ColorProvider>
 		</div>
 	)
 }
