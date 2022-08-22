@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack"
 import Box from "@mui/material/Box"
 import { TransactionsContext } from "./contexts/TransactionsContext"
 
-export default function FinancesHistory() {
+export default function FinancesHistory(props) {
 	const transactions = useContext(TransactionsContext)
 	return (
 		<Box>
@@ -13,7 +13,11 @@ export default function FinancesHistory() {
 			<Divider></Divider>
 			<Stack spacing={2}>
 				{transactions.map((transaction) => (
-					<FinancesTransaction key={transaction.id} transaction={transaction} />
+					<FinancesTransaction
+						key={transaction.id}
+						transaction={transaction}
+						categories={props.categories}
+					/>
 				))}
 			</Stack>
 		</Box>

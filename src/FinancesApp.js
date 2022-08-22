@@ -61,7 +61,7 @@ export default function FinancesApp() {
 							<FinancesForm categories={categories} />
 						</Box>
 					</Drawer>
-					<FinancesHistory />
+					<FinancesHistory categories={categories} />
 				</TransactionsProvider>
 			</Container>
 		</ThemeProvider>

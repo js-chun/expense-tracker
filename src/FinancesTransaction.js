@@ -7,8 +7,9 @@ import Grid from "@mui/material/Unstable_Grid2"
 import IconButton from "@mui/material/IconButton"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { Item } from "./styles/TransactionItemStyles"
+import Tooltip from "@mui/material/Tooltip"
 import Chip from "@mui/material/Chip"
+import { Item } from "./styles/TransactionItemStyles"
 
 export default function FinancesTransaction(props) {
 	const dispatch = useContext(DispatchContext)
@@ -35,40 +36,49 @@ export default function FinancesTransaction(props) {
 				<TransactionEdit
 					transaction={transaction}
 					handleEditOff={handleEditOff}
+					categories={props.categories}
 				/>
 			) : (
-				<Grid container p={0} spacing={0} sx={{ width: "100%" }}>
-					<Grid xs={1}>
-						<Box
-							sx={{
-								height: "100%",
-								width: "30px",
-								backgroundColor: { backgroundColor },
-							}}></Box>
-					</Grid>
-					<Grid xs={7}>
-						<Item>
-							{transaction.desc.length <= 35
-								? transaction.desc
-								: `${transaction.desc.substr(0, 20)}...`}
-						</Item>
-					</Grid>
-					<Grid xs={2}>
-						<Item sx={{ justifyContent: "space-between" }}>
-							$<Item>{(+transaction.amount).toFixed(2)}</Item>
-						</Item>
-					</Grid>
-					<Grid xs={2}>
-						<Item sx={{ justifyContent: "end" }}>
-							<IconButton size="small" onClick={handleEditOn}>
-								<EditIcon />
-							</IconButton>
-							<IconButton size="small" onClick={handleDelete}>
-								<DeleteIcon />
-							</IconButton>
-						</Item>
-					</Grid>
-				</Grid>
+				<Tooltip title={transaction.date} placement="left">
+					<Box sx={{ display: "flex" }}>
+						<Grid container p={0} spacing={0} sx={{ width: "80%" }}>
+							<Grid xs={1}>
+								<Box
+									sx={{
+										height: "100%",
+										width: "30px",
+										backgroundColor: { backgroundColor },
+									}}></Box>
+							</Grid>
+							<Grid xs={7}>
+								<Item>
+									{transaction.desc.length <= 35
+										? transaction.desc
+										: `${transaction.desc.substr(0, 25)}...`}
+								</Item>
+							</Grid>
+							<Grid xs={2}>
+								<Item sx={{ justifyContent: "space-between" }}>
+									$<Item>{(+transaction.amount).toFixed(2)}</Item>
+								</Item>
+							</Grid>
+							<Grid xs={2}>
+								<Item sx={{ justifyContent: "end" }}>
+									<IconButton size="small" onClick={handleEditOn}>
+										<EditIcon />
+									</IconButton>
+									<IconButton size="small" onClick={handleDelete}>
+										<DeleteIcon />
+									</IconButton>
+								</Item>
+							</Grid>
+						</Grid>
+						<Chip
+							label={transaction.category}
+							sx={{ width: "20%", backgroundColor: { backgroundColor } }}
+						/>
+					</Box>
+				</Tooltip>
 			)}
 		</Paper>
 	)

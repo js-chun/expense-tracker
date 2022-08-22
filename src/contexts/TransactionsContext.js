@@ -14,6 +14,7 @@ function transactionReducer(state, action) {
 							type: action.transaction.type,
 							desc: action.transaction.desc,
 							amount: action.transaction.amount,
+							category: action.transaction.category,
 					  }
 					: transaction
 			)
