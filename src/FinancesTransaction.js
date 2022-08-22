@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton"
 import EditIcon from "@mui/icons-material/Edit"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { Item } from "./styles/TransactionItemStyles"
+import Chip from "@mui/material/Chip"
 
 export default function FinancesTransaction(props) {
 	const dispatch = useContext(DispatchContext)
@@ -29,7 +30,7 @@ export default function FinancesTransaction(props) {
 	}
 
 	return (
-		<Paper elevation={2}>
+		<Paper elevation={1}>
 			{edit ? (
 				<TransactionEdit
 					transaction={transaction}
@@ -49,7 +50,7 @@ export default function FinancesTransaction(props) {
 						<Item>
 							{transaction.desc.length <= 35
 								? transaction.desc
-								: `${transaction.desc.substr(0, 35)}...`}
+								: `${transaction.desc.substr(0, 20)}...`}
 						</Item>
 					</Grid>
 					<Grid xs={2}>

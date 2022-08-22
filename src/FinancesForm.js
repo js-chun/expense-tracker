@@ -5,25 +5,31 @@ import Button from "@mui/material/Button"
 import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import TextField from "@mui/material/TextField"
+import MenuItem from "@mui/material/MenuItem"
+import FormControl from "@mui/material/FormControl"
+import Select from "@mui/material/Select"
+import InputLabel from "@mui/material/InputLabel"
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn"
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
+import ViewListIcon from "@mui/icons-material/ViewList"
 
 import { DispatchContext } from "./contexts/TransactionsContext"
 
-export default function FinancesForm() {
+export default function FinancesForm(props) {
 	const dispatch = useContext(DispatchContext)
 	const [financeType, setFinanceType] = useState("expenses")
 	const [transaction, setTransaction] = useState({
 		dollars: "",
 		cents: "",
 		desc: "",
+		category: "",
 		date: getDateString(),
 	})
 
 	const handleTypeChange = (event, newType) => {
-		setFinanceType(newType)
+		if (financeType !== event.target.value) setFinanceType(newType)
 	}
 
 	//popover component when invalid value
@@ -59,6 +65,10 @@ export default function FinancesForm() {
 		}
 	}
 
+	const handleCategoryChange = (evt) => {
+		setTransaction({ ...transaction, category: evt.target.value })
+	}
+
 	const handleSubmit = (evt) => {
 		evt.preventDefault()
 		let amount = +transaction.dollars + transaction.cents / 100
@@ -69,8 +79,10 @@ export default function FinancesForm() {
 				desc: transaction.desc,
 				date: transaction.date,
 				type: financeType,
+				category: transaction.category,
 			},
 		})
+		setTransaction({ dollars: "", cents: "", desc: "", date: getDateString() })
 	}
 
 	return (
@@ -135,6 +147,21 @@ export default function FinancesForm() {
 							shrink: true,
 						}}
 					/>
+				</Box>
+				<Box mb={3} sx={{ display: "flex", alignItems: "flex-end" }}>
+					<ViewListIcon sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+					<FormControl variant="standard" fullWidth>
+						<InputLabel id="category-label">Category</InputLabel>
+						<Select
+							labelId="category-label"
+							value={transaction.category}
+							onChange={handleCategoryChange}
+							label="Category">
+							{props.categories[financeType].map((category) => (
+								<MenuItem value={category}>{category}</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 				</Box>
 				<Button
 					size="large"

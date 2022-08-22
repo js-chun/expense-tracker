@@ -12,6 +12,19 @@ import Drawer from "@mui/material/Drawer"
 import Button from "@mui/material/Button"
 import CssBaseline from "@mui/material/CssBaseline"
 
+const categories = {
+	expenses: [
+		"Housing",
+		"Transportation",
+		"Food",
+		"Utilities",
+		"Personal",
+		"Entertainment",
+		"Others",
+	],
+	income: ["Paycheck", "Investment", "Others"],
+}
+
 export default function FinancesApp() {
 	const [open, setOpen] = useState(false)
 	const colorMode = useContext(ColorContext)
@@ -45,7 +58,7 @@ export default function FinancesApp() {
 					</Button>
 					<Drawer open={open} onClose={toggleDrawer(false)}>
 						<Box sx={{ width: 400 }} role="presentation">
-							<FinancesForm />
+							<FinancesForm categories={categories} />
 						</Box>
 					</Drawer>
 					<FinancesHistory />

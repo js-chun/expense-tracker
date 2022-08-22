@@ -4,7 +4,7 @@ import React, { createContext, useState, useMemo } from "react"
 export const ColorContext = createContext()
 
 export function ColorProvider(props) {
-	const [isDarkMode, setIsDarkMode] = useState(false)
+	const [isDarkMode, setIsDarkMode] = useState(true)
 
 	const handleToggle = () => {
 		setIsDarkMode(!isDarkMode)
