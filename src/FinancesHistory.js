@@ -6,13 +6,13 @@ import Box from "@mui/material/Box"
 import { TransactionsContext } from "./contexts/TransactionsContext"
 
 export default function FinancesHistory(props) {
-	const transactions = useContext(TransactionsContext)
+	const { viewTransactions } = useContext(TransactionsContext)
 	return (
 		<Box>
 			<h1>History</h1>
 			<Divider></Divider>
 			<Stack spacing={2}>
-				{transactions.map((transaction) => (
+				{viewTransactions.map((transaction) => (
 					<FinancesTransaction
 						key={transaction.id}
 						transaction={transaction}

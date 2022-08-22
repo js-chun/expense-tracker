@@ -8,15 +8,15 @@ import Typography from "@mui/material/Typography"
 import { TransactionsContext } from "./contexts/TransactionsContext"
 
 export default function FinancesDashboard() {
-	const transactions = useContext(TransactionsContext)
+	const { viewTransactions } = useContext(TransactionsContext)
 
-	const sumIncome = transactions
+	const sumIncome = viewTransactions
 		.map((transaction) =>
 			transaction.type === "income" ? +transaction.amount : 0
 		)
 		.reduce((prevValue, currValue) => prevValue + currValue, 0)
 
-	const sumExpenses = transactions
+	const sumExpenses = viewTransactions
 		.map((transaction) =>
 			transaction.type === "expenses" ? +transaction.amount : 0
 		)
@@ -26,7 +26,7 @@ export default function FinancesDashboard() {
 
 	return (
 		<Box>
-			<h2>August 2022</h2>
+			<h2>Summary</h2>
 			<Stack
 				direction="row"
 				justifyContent="center"

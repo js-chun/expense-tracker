@@ -106,4 +106,28 @@ export const defaultTransactions = [
 		category: "Entertainment",
 		id: uuidv4(),
 	},
+	{
+		amount: 20.0,
+		desc: "McDonalds",
+		date: "2022-07-10",
+		type: "expenses",
+		category: "Food",
+		id: uuidv4(),
+	},
+	{
+		amount: 20.1,
+		desc: "SkipTheDishes",
+		date: "2022-07-22",
+		type: "expenses",
+		category: "Personal",
+		id: uuidv4(),
+	},
+	{
+		amount: 1500.0,
+		desc: "Income",
+		date: "2022-07-04",
+		type: "income",
+		category: "Paycheck",
+		id: uuidv4(),
+	},
 ]

@@ -1,8 +1,8 @@
 import { useState, useContext } from "react"
 import FinancesForm from "./FinancesForm"
+import FinanceBar from "./FinanceBar"
 import FinancesDashboard from "./FinancesDashboard"
 import FinancesHistory from "./FinancesHistory"
-import { MUIColorSwitch } from "./styles/MUIColorSwitch"
 import { ThemeProvider } from "@mui/material/styles"
 import { ColorContext } from "./contexts/ColorContext"
 import TransactionsProvider from "./contexts/TransactionsContext"
@@ -44,11 +44,8 @@ export default function FinancesApp() {
 			<CssBaseline />
 			<Container maxWidth="sm">
 				<h1>Finance Tracker</h1>
-				<MUIColorSwitch
-					checked={colorMode.isDarkMode}
-					onChange={colorMode.handleToggle}
-				/>
 				<TransactionsProvider>
+					<FinanceBar />
 					<FinancesDashboard />
 					<Button
 						onClick={toggleDrawer(true)}
