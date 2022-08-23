@@ -9,6 +9,9 @@ import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 import InputLabel from "@mui/material/InputLabel"
+import Snackbar from "@mui/material/Snackbar"
+import Slide from "@mui/material/Slide"
+import MuiAlert from "@mui/material/Alert"
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn"
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined"
 import TodayOutlinedIcon from "@mui/icons-material/TodayOutlined"
@@ -16,6 +19,14 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined"
 import ViewListIcon from "@mui/icons-material/ViewList"
 
 import { DispatchContext } from "./contexts/TransactionsContext"
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+})
+
+function TransitionDown(props) {
+	return <Slide {...props} direction="down" />
+}
 
 export default function FinancesForm(props) {
 	const dispatch = useContext(DispatchContext)
@@ -27,6 +38,7 @@ export default function FinancesForm(props) {
 		category: "",
 		date: getDateString(),
 	})
+	const [alertOpen, setAlertOpen] = useState(false)
 
 	const handleTypeChange = (event, newType) => {
 		if (financeType !== event.target.value) setFinanceType(newType)
@@ -83,6 +95,11 @@ export default function FinancesForm(props) {
 			},
 		})
 		setTransaction({ dollars: "", cents: "", desc: "", date: getDateString() })
+		setAlertOpen(true)
+	}
+
+	const handleAlertClose = () => {
+		setAlertOpen(false)
 	}
 
 	return (
@@ -172,6 +189,19 @@ export default function FinancesForm(props) {
 					Add Transaction
 				</Button>
 			</form>
+			<Snackbar
+				open={alertOpen}
+				autoHideDuration={1000}
+				onClose={handleAlertClose}
+				TransitionComponent={TransitionDown}
+				anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+				<Alert
+					onClose={handleAlertClose}
+					severity="success"
+					sx={{ width: "100%" }}>
+					Transaction successfully added!
+				</Alert>
+			</Snackbar>
 		</Box>
 	)
 }

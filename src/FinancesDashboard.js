@@ -43,7 +43,7 @@ export default function FinancesDashboard() {
 				<Item stripecolor="#118ab2">
 					<Typography variant="h6">Total</Typography>
 					<Typography variant="h5">
-						{total >= 0 ? `${total.toFixed(2)}` : `-$${(-total).toFixed(2)}`}
+						{total >= 0 ? `$${total.toFixed(2)}` : `-$${(-total).toFixed(2)}`}
 					</Typography>
 				</Item>
 			</Stack>

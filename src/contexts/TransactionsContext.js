@@ -43,6 +43,10 @@ export default function TransactionsProvider(props) {
 		setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1))
 	}
 
+	const handleDateToday = () => {
+		setDate(new Date())
+	}
+
 	const [viewTransactions, setViewTransactions] = useState(
 		transactions
 			.filter((transaction) =>
@@ -63,7 +67,13 @@ export default function TransactionsProvider(props) {
 
 	return (
 		<TransactionsContext.Provider
-			value={{ viewTransactions, date, handleDatePrev, handleDateNext }}>
+			value={{
+				viewTransactions,
+				date,
+				handleDatePrev,
+				handleDateNext,
+				handleDateToday,
+			}}>
 			<DispatchContext.Provider value={dispatch}>
 				{props.children}
 			</DispatchContext.Provider>
